@@ -1,47 +1,47 @@
 services:
-  # A PostgreSQL database on the free tier
   - type: pserv
     name: n8n-db
     plan: free
-    postgres:
-      version: 13
+    # The following properties are specific to a postgres service
+    properties:
+      - property: postgres
+        version: 13
 
-  # The n8n web service
   - type: web
     name: n8n
-    plan: free # Use the free instance type
+    plan: free
     env: docker
     dockerfilePath: ./Dockerfile
     envVars:
       - key: DB_TYPE
         value: postgresdb
-      - key: DB_POSTGRESDB_HOST
-        fromService:
+      - fromService:
           type: pserv
           name: n8n-db
+          envVarKey: DB_POSTGRESDB_HOST
           property: host
-      - key: DB_POSTGRESDB_PORT
-        fromService:
+      - fromService:
           type: pserv
           name: n8n-db
+          envVarKey: DB_POSTGRESDB_PORT
           property: port
-      - key: DB_POSTGRESDB_DATABASE
-        fromService:
+      - fromService:
           type: pserv
           name: n8n-db
+          envVarKey: DB_POSTGRESDB_DATABASE
           property: database
-      - key: DB_POSTGRESDB_USER
-        fromService:
+      - fromService:
           type: pserv
           name: n8n-db
+          envVarKey: DB_POSTGRESDB_USER
           property: user
-      - key: DB_POSTGRESDB_PASSWORD
-        fromService:
+      - fromService:
           type: pserv
           name: n8n-db
+          envVarKey: DB_POSTGRESDB_PASSWORD
           property: password
-      - key: WEBHOOK_URL
-        fromService:
+      - fromService:
           type: web
           name: n8n
+          envVarKey: WEBHOOK_URL
           property: url
