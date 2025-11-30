@@ -1,0 +1,35 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "watchPatterns": [
+      "Dockerfile"
+    ]
+  },
+  "deploy": {
+    "startCommand": "n8n",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "services": {
+    "n8n": {
+      "build": {
+        "builder": "DOCKERFILE"
+      },
+      "env": {
+        "DB_TYPE": "postgresdb",
+        "DB_POSTGRESDB_HOST": "${{postgres.HOST}}",
+        "DB_POSTGRESDB_USER": "${{postgres.USER}}",
+        "DB_POSTGRESDB_PASSWORD": "${{postgres.PASSWORD}}",
+        "DB_POSTGRESDB_DATABASE": "${{postgres.DATABASE}}",
+        "N8N_HOST": "${{RAILWAY_STATIC_URL}}",
+        "WEBHOOK_URL": "https://${{RAILWAY_STATIC_URL}}",
+        "N8N_BASIC_AUTH_USER": "",
+        "N8N_BASIC_AUTH_PASSWORD": ""
+      }
+    },
+    "postgres": {
+      "plugin": "postgres"
+    }
+  }
+}
