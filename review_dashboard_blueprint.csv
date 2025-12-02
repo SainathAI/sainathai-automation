@@ -1,0 +1,7 @@
+# This file is a blueprint for the 'SAINATHAI Review Dashboard' Google Sheet.
+# It should contain one tab: 'ENGAGEMENT_LOG'.
+
+# --- Tab: ENGAGEMENT_LOG ---
+POST_ID,USERNAME,COMMENT_TEXT,LIKES_COUNT,AI_REPLY,INTEREST_SCORE,HIGHLIGHT_TAG
+"yt_Abc123","@someuser","This is an amazing tool! Totally changed my workflow.",15,"Thank you so much! We're thrilled to hear that.",9,"TESTIMONIAL CANDIDATE"
+"x_Def456","@anotheruser","I'm a bit confused on how to get started.",2,"We've got a great tutorial video here that should help: [link]. Let us know if you have more questions!",4,""
