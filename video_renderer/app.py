@@ -31,6 +31,7 @@ def render_video():
     """
     data = request.json
 
+    if not all(k in data for k in ['audio_url', 'visual_urls', 'timed_script']):
     if not all(k in data for k in ['audio_url', 'visual_urls', 'script_lines', 'logo_url']):
         return jsonify({"error": "Missing required parameters"}), 400
 
@@ -50,6 +51,102 @@ def render_video():
         audio_clip = AudioFileClip(audio_path)
         video_duration = audio_clip.duration
 
+        # 3. Define video resolution (9:16 aspect ratio)
+        video_size = (1080, 1920)
+
+        # 4. Create video clips from visuals
+        # Each visual will have an equal share of the total video duration
+        clip_duration = video_duration / len(visual_paths)
+        visual_clips = []
+        for path in visual_paths:
+            clip = ImageClip(path).set_duration(clip_duration)
+            # Resize and crop to fit the 9:16 aspect ratio
+            cropped_clip = clip.fx(vfx.resize, newsize=video_size)
+            visual_clips.append(cropped_clip)
+
+        # 5. Concatenate visual clips to form the main video track
+        final_video = concatenate_videoclips(visual_clips, method="compose").set_position("center")
+        final_video.audio = audio_clip
+
+        # 5. Create Dynamic Subtitles
+        subtitle_clips = []
+        timed_script = data['timed_script']
+
+        # Group words into lines for display
+        lines = []
+        current_line = []
+        max_line_length = 30 # Approx chars per line
+        current_length = 0
+        for word_info in timed_script:
+            word = word_info['word']
+            if current_length + len(word) > max_line_length and current_line:
+                lines.append(current_line)
+                current_line = []
+                current_length = 0
+            current_line.append(word_info)
+            current_length += len(word) + 1
+        if current_line:
+            lines.append(current_line)
+
+        # Generate a clip for each word, showing the active word in gold
+        for line in lines:
+            for i, word_info in enumerate(line):
+                start_time = word_info['start']
+                duration = word_info['end'] - word_info['start']
+
+                words_before = " ".join(w['word'] for w in line[:i])
+                current_word = word_info['word']
+                words_after = " ".join(w['word'] for w in line[i+1:])
+
+                # Build the Pango markup string for rich text
+                pango_markup = (f'<span foreground="#FFFFFF">{words_before} </span>' if words_before else "") + \
+                               f'<span foreground="#EAB600">{current_word}</span>' + \
+                               (f'<span foreground="#FFFFFF"> {words_after}</span>' if words_after else "")
+
+                # Clean up double spaces that might occur
+                pango_markup = pango_markup.strip()
+
+                txt_clip = TextClip(
+                    pango_markup,
+                    fontsize=70,
+                    font='Arial-Bold',
+                    stroke_color='black',
+                    stroke_width=2,
+                    method='pango',
+                    size=(final_video.w * 0.9, None) # 90% of video width
+                ).set_pos(('center', 'bottom')).set_start(start_time).set_duration(duration)
+
+                subtitle_clips.append(txt_clip)
+
+        # 6. Add watermark
+        logo_path = "assets/logo.png"
+        logo_clip = (ImageClip(logo_path)
+                     .set_duration(video_duration)
+                     .resize(width=final_video.w // 10) # Resize to 1/10th of video width
+                     .set_opacity(0.35)
+                     .set_pos(("left", "top")))
+
+        # 7. Composite all layers together for the main video
+        main_video_composition = CompositeVideoClip([final_video, logo_clip] + subtitle_clips)
+
+        # 8. Create the 1.5s branded outro
+        outro_duration = 1.5
+        outro_bg = ColorClip(size=final_video.size, color=(0,0,0), duration=outro_duration)
+        outro_logo = (ImageClip(logo_path)
+                      .set_duration(outro_duration)
+                      .resize(width=final_video.w * 0.3) # Scale to 30% of video width
+                      .set_pos("center"))
+
+        # Animate the logo: fade in and scale up
+        outro_logo_animated = outro_logo.fx(vfx.fadein, duration=outro_duration * 0.5) \
+                                        .fx(vfx.resize, lambda t: 1 + t * 0.2) # Gentle zoom in effect
+
+        outro_composition = CompositeVideoClip([outro_bg, outro_logo_animated.set_pos("center")])
+
+        # 9. Concatenate the main video and the outro
+        final_composition = concatenate_videoclips([main_video_composition, outro_composition])
+
+        # 10. Define output path and write the final video file
         # 3. Create video clips from visuals
         # Each visual will have an equal share of the total video duration
         clip_duration = video_duration / len(visual_paths)
