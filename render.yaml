@@ -27,6 +27,9 @@ services:
         fromDatabase:
           name: n8n-db
           property: password
+    data:
+      - name: n8n-data
+        mountPath: /root/.n8n
 databases:
   - name: n8n-db
     plan: free
