@@ -30,6 +30,7 @@ services:
       - key: N8N_ENCRYPTION_KEY
         sync: false
     disks:
+    data:
       - name: n8n-data
         mountPath: /root/.n8n
 databases:
