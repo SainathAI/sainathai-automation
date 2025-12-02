@@ -1,3 +1,149 @@
+
+{
+  "name": "Social Media Content Factory",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "topic",
+              "value": "The Rise of Generative AI"
+            },
+            {
+              "name": "logo_url",
+              "value": "https://i.imgur.com/sainath.png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "1. Set Topic & Static Assets",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "script_lines",
+              "value": "={{JSON.stringify(['Generative AI is changing the world.', 'It can create text, images, and even code.', 'What will you create with it?'])}}"
+            }
+          ]
+        },
+        "options": {
+          "parseJson": true
+        }
+      },
+      "name": "2. Generate Script (Placeholder)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "audio_url",
+              "value": "https://file-examples.com/storage/fe52cb0706634737a0a95b3/2017/11/file_example_MP3_700KB.mp3"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "3. Generate Audio (Placeholder)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "visual_urls",
+              "value": "={{JSON.stringify(['https://images.pexels.com/photos/17483868/pexels-photo-17483868.jpeg', 'https://images.pexels.com/photos/16382800/pexels-photo-16382800.jpeg', 'https://images.pexels.com/photos/17224855/pexels-photo-17224855.jpeg'])}}"
+            }
+          ]
+        },
+        "options": {
+          "parseJson": true
+        }
+      },
+      "name": "4. Get Visuals (Placeholder)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR-CLOUD-RUN-SERVICE-URL.a.run.app/render-video",
+        "options": {},
+        "bodyParametersJson": "={{JSON.stringify({\n  \"audio_url\": $node[\"3. Generate Audio (Placeholder)\"].json[\"audio_url\"],\n  \"visual_urls\": $node[\"4. Get Visuals (Placeholder)\"].json[\"visual_urls\"],\n  \"script_lines\": $node[\"2. Generate Script (Placeholder)\"].json[\"script_lines\"],\n  \"logo_url\": $node[\"1. Set Topic & Static Assets\"].json[\"logo_url\"]\n})}}",
+        "jsonParameters": true
+      },
+      "name": "5. Call Video Rendering Service",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1340,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "1. Set Topic & Static Assets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Set Topic & Static Assets": {
+      "main": [
+        [
+          {
+            "node": "2. Generate Script (Placeholder)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Generate Script (Placeholder)": {
+      "main": [
+        [
+          {
+            "node": "3. Generate Audio (Placeholder)",
 {
   "id": "CfdF2XtXC68iJ6Hr",
   "meta": {
@@ -1673,6 +1819,11 @@
         ]
       ]
     },
+    "3. Generate Audio (Placeholder)": {
+      "main": [
+        [
+          {
+            "node": "4. Get Visuals (Placeholder)",
     "Prepare Content Review Email": {
       "main": [
         [
@@ -1684,6 +1835,11 @@
         ]
       ]
     },
+    "4. Get Visuals (Placeholder)": {
+      "main": [
+        [
+          {
+            "node": "5. Call Video Rendering Service",
     "Social Media Content Factory": {
       "main": [
         [
@@ -1696,4 +1852,5 @@
       ]
     }
   }
+}
 }
