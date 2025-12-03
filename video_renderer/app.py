@@ -25,7 +25,7 @@ if not os.path.exists(TMP_PATH):
 
 def download_file(url, local_filename):
     """Downloads a file from a URL to a local path."""
-    with requests.get(url, stream=True) as r:
+    with requests.get(url, stream=True, timeout=30) as r:
         r.raise_for_status()
         with open(local_filename, "wb") as f:
             for chunk in r.iter_content(chunk_size=8192):
@@ -129,7 +129,13 @@ def create_outro(final_video):
     outro_logo_animated = outro_logo.fx(
         vfx.fadein, duration=outro_duration * 0.5
     ).fx(vfx.resize, lambda t: 1 + t * 0.2)
-    return CompositeVideoClip([outro_bg, outro_logo_animated.set_pos("center")])
+
+    # Add text overlay
+    text = TextClip("SAINATHAI", fontsize=70, color='white', font='Arial-Bold')
+    text = text.set_pos(('center', 'bottom')).set_duration(outro_duration)
+    text_animated = text.fx(vfx.fadein, duration=outro_duration * 0.5)
+
+    return CompositeVideoClip([outro_bg, outro_logo_animated.set_pos("center"), text_animated])
 
 
 @app.route("/render-video", methods=["POST"])
@@ -183,7 +189,7 @@ def render_video():
     except (requests.exceptions.RequestException, IOError) as e:
         app.logger.error("Error downloading assets: %s", str(e))
         return jsonify({"error": "Failed to download assets"}), 500
-    except Exception as e:
+    except (ValueError, KeyError, IndexError) as e:
         app.logger.error("An unexpected error occurred: %s", str(e))
         for f in os.listdir(TMP_PATH):
             os.remove(os.path.join(TMP_PATH, f))
