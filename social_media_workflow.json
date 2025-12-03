@@ -14,7 +14,7 @@
     {
       "parameters": {
         "authentication": "oAuth2",
-        "operation": "readSheet",
+        "operation": "Get Row(s)",
         "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
         "sheetName": "GLOBAL_CONFIG",
         "options": {
@@ -32,7 +32,7 @@
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_CREDENTIAL_ID",
+          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
           "name": "Google Sheets account"
         }
       }
@@ -40,7 +40,7 @@
     {
       "parameters": {
         "authentication": "oAuth2",
-        "operation": "readSheet",
+        "operation": "Get Row(s)",
         "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
         "sheetName": "PRIORITY_QUEUE",
         "filters": {
@@ -67,7 +67,7 @@
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_CREDENTIAL_ID",
+          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
           "name": "Google Sheets account"
         }
       }
@@ -146,9 +146,9 @@
     },
     {
       "parameters": {
-        "url": "https://YOUR-CLOUD-RUN-SERVICE-URL.a.run.app/render-video",
+        "url": "https://REPLACE-WITH-YOUR-CLOUD-RUN-SERVICE-URL.a.run.app/render-video",
         "options": {},
-        "bodyParametersJson": "={{...}}",
+        "bodyParametersJson": "={{ {} }}",
         "jsonParameters": true
       },
       "name": "6. Call Video Rendering Service",
@@ -162,7 +162,7 @@
     {
       "parameters": {
         "authentication": "oAuth2",
-        "operation": "updateSheet",
+        "operation": "Update Row",
         "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
         "sheetName": "PRIORITY_QUEUE",
         "keyColumn": "PRIORITY_ID",
@@ -185,7 +185,7 @@
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "YOUR_CREDENTIAL_ID",
+          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
           "name": "Google Sheets account"
         }
       }
