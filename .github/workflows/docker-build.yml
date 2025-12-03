@@ -1,0 +1,11 @@
+name: Docker Build Verification
+
+on: [push]
+
+jobs:
+  build-video-renderer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build video-renderer Docker image
+        run: docker build ./video_renderer --file video_renderer/Dockerfile --tag video-renderer:$(date +%s)

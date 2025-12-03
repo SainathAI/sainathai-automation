@@ -8,12 +8,88 @@
       "type": "n8n-nodes-base.start",
       "typeVersion": 1,
       "position": [
+        250,
         240,
         300
       ]
     },
     {
       "parameters": {
+        "authentication": "oAuth2",
+        "operation": "readSheet",
+        "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
+        "sheetName": "GLOBAL_CONFIG",
+        "options": {
+          "key": "A",
+          "value": "B",
+          "headerRow": true
+        }
+      },
+      "name": "1. Read Global Config",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "readSheet",
+        "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
+        "sheetName": "PRIORITY_QUEUE",
+        "filters": {
+          "conditions": [
+            {
+              "field": {
+                "jsonPath": "STATUS"
+              },
+              "operation": "equals",
+              "value": "PENDING"
+            }
+          ]
+        },
+        "options": {
+          "limit": 1
+        }
+      },
+      "name": "2. Read Priority Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        690,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $items().length > 0 }}",
+              "operation": "true"
+            }
+          ]
+        }
+      },
+      "name": "3. Priority Task Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        910,
         "values": {
           "string": [
             {
@@ -63,6 +139,8 @@
         "values": {
           "string": [
             {
+              "name": "topic",
+              "value": "={{$node[\"2. Read Priority Queue\"].json[\"TOPIC_TITLE\"]}}"
               "name": "audio_url",
               "value": "https://file-examples.com/storage/fe52cb0706634737a0a95b3/2017/11/file_example_MP3_700KB.mp3"
             }
@@ -70,6 +148,12 @@
         },
         "options": {}
       },
+      "name": "4a. Set Topic from Priority",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1130,
+        200
       "name": "3. Generate Audio (Placeholder)",
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
@@ -83,6 +167,31 @@
         "values": {
           "string": [
             {
+              "name": "topic",
+              "value": "This topic would be auto-generated from trends."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "4b. Auto-Scrape Topic",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1130,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "merge",
+        "options": {}
+      },
+      "name": "5. Merge Topic",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1350,
               "name": "visual_urls",
               "value": "={{JSON.stringify(['https://images.pexels.com/photos/17483868/pexels-photo-17483868.jpeg', 'https://images.pexels.com/photos/16382800/pexels-photo-16382800.jpeg', 'https://images.pexels.com/photos/17224855/pexels-photo-17224855.jpeg'])}}"
             }
@@ -104,6 +213,47 @@
       "parameters": {
         "url": "https://YOUR-CLOUD-RUN-SERVICE-URL.a.run.app/render-video",
         "options": {},
+        "bodyParametersJson": "={{...}}",
+        "jsonParameters": true
+      },
+      "name": "6. Call Video Rendering Service",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        1570,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "updateSheet",
+        "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
+        "sheetName": "PRIORITY_QUEUE",
+        "keyColumn": "PRIORITY_ID",
+        "key": "={{$node[\"2. Read Priority Queue\"].json[\"PRIORITY_ID\"]}}",
+        "fieldsToUpdate": {
+          "string": [
+            {
+              "fieldName": "STATUS",
+              "fieldValue": "COMPLETED"
+            }
+          ]
+        }
+      },
+      "name": "7. Update Priority Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        1790,
+        200
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      }
         "bodyParametersJson": "={{JSON.stringify({\n  \"audio_url\": $node[\"3. Generate Audio (Placeholder)\"].json[\"audio_url\"],\n  \"visual_urls\": $node[\"4. Get Visuals (Placeholder)\"].json[\"visual_urls\"],\n  \"script_lines\": $node[\"2. Generate Script (Placeholder)\"].json[\"script_lines\"],\n  \"logo_url\": $node[\"1. Set Topic & Static Assets\"].json[\"logo_url\"]\n})}}",
         "jsonParameters": true
       },
@@ -121,6 +271,7 @@
       "main": [
         [
           {
+            "node": "1. Read Global Config",
             "node": "1. Set Topic & Static Assets",
             "type": "main",
             "index": 0
@@ -128,6 +279,11 @@
         ]
       ]
     },
+    "1. Read Global Config": {
+      "main": [
+        [
+          {
+            "node": "2. Read Priority Queue",
     "1. Set Topic & Static Assets": {
       "main": [
         [
@@ -139,6 +295,80 @@
         ]
       ]
     },
+    "2. Read Priority Queue": {
+      "main": [
+        [
+          {
+            "node": "3. Priority Task Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Priority Task Exists?": {
+      "main": [
+        [
+          {
+            "node": "4a. Set Topic from Priority",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4b. Auto-Scrape Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4a. Set Topic from Priority": {
+      "main": [
+        [
+          {
+            "node": "5. Merge Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4b. Auto-Scrape Topic": {
+      "main": [
+        [
+          {
+            "node": "5. Merge Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Merge Topic": {
+      "main": [
+        [
+          {
+            "node": "6. Call Video Rendering Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. Call Video Rendering Service": {
+      "main": [
+        [
+          {
+            "node": "7. Update Priority Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
     "2. Generate Script (Placeholder)": {
       "main": [
         [
