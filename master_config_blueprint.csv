@@ -1,0 +1,14 @@
+# This file is a blueprint for the 'SAINATHAI Master Config' Google Sheet.
+# It should contain two tabs: 'GLOBAL_CONFIG' and 'PRIORITY_QUEUE'.
+
+# --- Tab: GLOBAL_CONFIG ---
+VARIABLE_NAME,VALUE,DESCRIPTION
+BRAND_TONE,"Human, conversational, and slightly witty","The overall tone of voice for the AI-generated scripts."
+TARGET_KEYWORDS,"AI tools, Gemini Pro, Automation, Productivity Hacks","Comma-separated list of keywords for trend scraping and topic generation."
+TTS_VOICE,"alloy","The voice to be used for the text-to-speech generation (e.g., from OpenAI TTS)."
+CTA_LEAD_MAGNET_URL,"https://your-landing-page.com/free-guide","The URL for the call-to-action to capture email leads."
+
+# --- Tab: PRIORITY_QUEUE ---
+PRIORITY_ID,TOPIC_TITLE,STATUS
+LAUNCH-001,"The 15-Day Gemini Tool Launch: A Deep Dive",PENDING
+CAMPAIGN-002,"How to Automate Your Life with SainathAI",
