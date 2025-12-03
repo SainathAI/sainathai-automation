@@ -1,0 +1,343 @@
+{
+  "name": "Comment Listener & Logger",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "value": 15
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getMany",
+        "resource": "comment",
+        "options": {}
+      },
+      "name": "1. Poll for New Comments (Placeholder)",
+      "type": "n8n-nodes-base.youtube",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "youtubeOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gemini-pro",
+        "options": {
+          "prompt": "Analyze the following user comment for high engagement, genuine interest in the SAINATHAI tool, and potential as a testimonial. Provide a score from 1 to 10 (10 being ideal for a highlight). Output only the score number. Do not include any text, analysis, or explanation, only the integer.",
+          "input": "={{$json.COMMENT_TEXT}}"
+        }
+      },
+      "name": "2. AI Classification (Interest Score)",
+      "type": "n8n-nodes-base.googleGeminiChat",
+      "typeVersion": 1,
+      "position": [
+        690,
+        300
+      ],
+      "credentials": {
+        "googleGeminiApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Gemini account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{parseInt($json.output)}}",
+              "operation": "largerEqual",
+              "value2": 8
+            }
+          ]
+        }
+      },
+      "name": "3. Score >= 8?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        910,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "HIGHLIGHT_TAG",
+              "value": "TESTIMONIAL CANDIDATE"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "4a. Set Highlight Tag",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1130,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "HIGHLIGHT_TAG",
+              "value": "N/A"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "4b. Set Default Tag",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        1130,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "merge",
+        "options": {}
+      },
+      "name": "5. Merge Tag",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2,
+      "position": [
+        1350,
+        300
+      ]
+    },
+    {
+        "parameters": {
+          "model": "gemini-pro",
+          "options": {
+            "prompt": "You are a helpful and friendly social media assistant for a brand called SAINATHAI. Your goal is to write a brief, positive, and engaging reply to the user's comment. Thank them for their comment and encourage them to keep engaging. Do not sound robotic. Here is the comment:",
+            "input": "={{$json.COMMENT_TEXT}}"
+          }
+        },
+        "name": "6. AI-Generate Reply Text",
+        "type": "n8n-nodes-base.googleGeminiChat",
+        "typeVersion": 1,
+        "position": [
+          1570,
+          300
+        ],
+        "credentials": {
+          "googleGeminiApi": {
+            "id": "YOUR_CREDENTIAL_ID",
+            "name": "Google Gemini account"
+          }
+        }
+    },
+    {
+        "parameters": {
+          "authentication": "oAuth2",
+          "operation": "appendSheet",
+          "documentId": "1pROQC3exTrQiaHiYEYAa7zNHlbGSYQozMOYRN-jMl2Y",
+          "sheetName": "ENGAGEMENT_LOG",
+          "fields": {
+            "string": [
+              {
+                "fieldName": "POST_ID",
+                "fieldValue": "={{$node[\"1. Poll for New Comments (Placeholder)\"].json[\"POST_ID\"]}}"
+              },
+              {
+                "fieldName": "USERNAME",
+                "fieldValue": "={{$node[\"1. Poll for New Comments (Placeholder)\"].json[\"USERNAME\"]}}"
+              },
+              {
+                "fieldName": "COMMENT_TEXT",
+                "fieldValue": "={{$node[\"1. Poll for New Comments (Placeholder)\"].json[\"COMMENT_TEXT\"]}}"
+              },
+              {
+                "fieldName": "LIKES_COUNT",
+                "fieldValue": "={{$node[\"1. Poll for New Comments (Placeholder)\"].json[\"LIKES_COUNT\"]}}"
+              },
+              {
+                "fieldName": "AI_REPLY",
+                "fieldValue": "={{$node[\"6. AI-Generate Reply Text\"].json.output}}"
+              },
+              {
+                "fieldName": "INTEREST_SCORE",
+                "fieldValue": "={{$node[\"2. AI Classification (Interest Score)\"].json[\"output\"]}}"
+              },
+              {
+                "fieldName": "HIGHLIGHT_TAG",
+                "fieldValue": "={{$json.HIGHLIGHT_TAG}}"
+              }
+            ]
+          }
+        },
+        "name": "8. Log to Dashboard",
+        "type": "n8n-nodes-base.googleSheets",
+        "typeVersion": 3,
+        "position": [
+          1990,
+          300
+        ],
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "YOUR_CREDENTIAL_ID",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "create",
+          "resource": "comment",
+          "videoId": "={{$node[\"1. Poll for New Comments (Placeholder)\"].json[\"VIDEO_ID\"]}}",
+          "text": "={{$node[\"6. AI-Generate Reply Text\"].json.output}}"
+        },
+        "name": "7. Post Reply (Placeholder)",
+        "type": "n8n-nodes-base.youtube",
+        "typeVersion": 1,
+        "position": [
+          1790,
+          300
+        ],
+        "credentials": {
+          "youtubeOAuth2Api": {
+            "id": "YOUR_CREDENTIAL_ID",
+            "name": "YouTube account"
+          }
+        }
+      }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Poll for New Comments (Placeholder)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Poll for New Comments (Placeholder)": {
+      "main": [
+        [
+          {
+            "node": "2. AI Classification (Interest Score)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. AI Classification (Interest Score)": {
+      "main": [
+        [
+          {
+            "node": "3. Score >= 8?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Score >= 8?": {
+      "main": [
+        [
+          {
+            "node": "4a. Set Highlight Tag",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "4b. Set Default Tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4a. Set Highlight Tag": {
+      "main": [
+        [
+          {
+            "node": "5. Merge Tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4b. Set Default Tag": {
+      "main": [
+        [
+          {
+            "node": "5. Merge Tag",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Merge Tag": {
+      "main": [
+        [
+          {
+            "node": "6. AI-Generate Reply Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. AI-Generate Reply Text": {
+        "main": [
+          [
+            {
+              "node": "7. Post Reply (Placeholder)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+    },
+    "7. Post Reply (Placeholder)": {
+        "main": [
+          [
+            {
+              "node": "8. Log to Dashboard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+    }
+  }
+}
