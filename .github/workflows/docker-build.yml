@@ -3,13 +3,6 @@ name: Docker Build Verification
 on: [push]
 
 jobs:
-  build-n8n:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build n8n Docker image
-        run: docker build . --file Dockerfile --tag n8n:$(date +%s)
-
   build-video-renderer:
     runs-on: ubuntu-latest
     steps:

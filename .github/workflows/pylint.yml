@@ -21,4 +21,4 @@ jobs:
           pip install -r video_renderer/requirements.txt
       - name: Analysing the code with pylint
         run: |
-          pylint $(git ls-files 'video_renderer/**/*.py')
+          pylint video_renderer/
