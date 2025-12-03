@@ -8,4 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build video-renderer Docker image
-        run: docker build ./video_renderer --file video_renderer/Dockerfile --tag video-renderer:$(date +%s)
+        run: |
+          docker --version
+          docker build ./video_renderer --file video_renderer/Dockerfile --tag video-renderer:$(date +%s)
