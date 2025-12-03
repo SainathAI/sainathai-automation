@@ -32,11 +32,13 @@ def render_video():
     data = request.json
 
     if not all(k in data for k in ['audio_url', 'visual_urls', 'timed_script']):
+    if not all(k in data for k in ['audio_url', 'visual_urls', 'script_lines', 'logo_url']):
         return jsonify({"error": "Missing required parameters"}), 400
 
     try:
         # 1. Download all assets
         audio_path = download_file(data['audio_url'], os.path.join(TMP_PATH, "audio.mp3"))
+        logo_path = download_file(data['logo_url'], os.path.join(TMP_PATH, "logo.png"))
 
         visual_paths = []
         for i, url in enumerate(data['visual_urls']):
@@ -145,6 +147,51 @@ def render_video():
         final_composition = concatenate_videoclips([main_video_composition, outro_composition])
 
         # 10. Define output path and write the final video file
+        # 3. Create video clips from visuals
+        # Each visual will have an equal share of the total video duration
+        clip_duration = video_duration / len(visual_paths)
+        visual_clips = [ImageClip(path).set_duration(clip_duration).set_pos("center") for path in visual_paths]
+
+        # 4. Concatenate visual clips to form the main video track
+        final_video = concatenate_videoclips(visual_clips, method="compose")
+        final_video.audio = audio_clip
+
+        # 5. Create subtitles (TextClips)
+        subtitle_clips = []
+        for line in data['script_lines']:
+            # Wrap text to fit the screen
+            wrapped_text = "\\n".join(textwrap.wrap(line, width=30))
+
+            txt_clip = TextClip(
+                wrapped_text,
+                fontsize=70,
+                color='white',
+                font='Arial-Bold',
+                stroke_color='black',
+                stroke_width=2,
+                bg_color='rgba(0,0,0,0.5)', # Semi-transparent background
+                size=(final_video.w * 0.8, None) # 80% of video width
+            ).set_pos(('center', 'center'))
+            subtitle_clips.append(txt_clip)
+
+        # Assume each subtitle line is shown for an equal amount of time for now
+        # A more advanced implementation would sync this with the audio
+        subtitle_duration = video_duration / len(subtitle_clips)
+        for i, clip in enumerate(subtitle_clips):
+            clip.start = i * subtitle_duration
+            clip.duration = subtitle_duration
+
+        # 6. Add watermark
+        logo_clip = (ImageClip(logo_path)
+                     .set_duration(video_duration)
+                     .resize(height=100) # Adjust size as needed
+                     .margin(right=20, top=20, opacity=0) # Add padding
+                     .set_pos(("right","top")))
+
+        # 7. Composite all layers together
+        final_composition = CompositeVideoClip([final_video, logo_clip] + subtitle_clips)
+
+        # 8. Define output path and write the final video file
         output_filename = "final_video.mp4"
         output_path = os.path.join(TMP_PATH, output_filename)
         final_composition.write_videofile(output_path, fps=24, codec="libx264", audio_codec="aac")
