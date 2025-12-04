@@ -1,0 +1,159 @@
+{
+  "name": "Discovery Scout",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "mode": "everyX",
+          "io-ts": {
+            "unit": "days",
+            "value": 1
+          }
+        }
+      },
+      "name": "Once a day",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -600,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://news.google.com/rss/search?q=AI%20tools%20for%20creators%20OR%20CRM%20automation%20OR%20small%20business%20AI%20expansion&hl=en-US&gl=US&ceid=US:en"
+      },
+      "name": "Google News RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "Get Row(s)",
+        "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
+        "sheetName": "PRIORITY_QUEUE",
+        "options": {}
+      },
+      "name": "Read Priority Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        -160,
+        -420
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.title }}",
+              "operation": "notEqual",
+              "value2": "={{ $('Read Priority Queue').item.json.TOPIC_TITLE }}"
+            }
+          ]
+        }
+      },
+      "name": "Filter Unique Items",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        20,
+        -420
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "Append Row",
+        "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
+        "sheetName": "PRIORITY_QUEUE",
+        "fields": {
+          "columns": [
+            {
+              "column": "TOPIC_TITLE",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "column": "STATUS",
+              "value": "PENDING"
+            }
+          ]
+        }
+      },
+      "name": "Add to Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        240,
+        -420
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Once a day": {
+      "main": [
+        [
+          {
+            "node": "Google News RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google News RSS": {
+      "main": [
+        [
+          {
+            "node": "Filter Unique Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Priority Queue": {
+      "main": [
+        [
+          {
+            "node": "Filter Unique Items",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Filter Unique Items": {
+      "main": [
+        [
+          {
+            "node": "Add to Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": ""
+}
