@@ -1,0 +1,41 @@
+name: Sync to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main # This workflow runs on pushes to the main branch
+
+jobs:
+  sync-n8n-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push n8n service to Hub
+        uses: nateraw/huggingface-sync-action@v0.0.5
+        with:
+          github_repo_id: SainathAI/sainathai-automation
+          huggingface_repo_id: sainathai/sainathai-n8n
+          hf_token: ${{ secrets.HF_ACCESS_TOKEN }}
+          repo_type: space
+          subdirectory: ./n8n/
+          private: false
+
+  sync-video-renderer-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push video_renderer service to Hub
+        uses: nateraw/huggingface-sync-action@v0.0.5
+        with:
+          github_repo_id: SainathAI/sainathai-automation
+          huggingface_repo_id: sainathai/sainathai-video-renderer
+          hf_token: ${{ secrets.HF_ACCESS_TOKEN }}
+          repo_type: space
+          subdirectory: ./video_renderer/
+          private: false
