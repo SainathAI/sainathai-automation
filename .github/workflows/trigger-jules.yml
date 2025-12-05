@@ -1,11 +1,11 @@
-name: Actions Diagnosis Test
+name: Trigger Jules Session
 on:
-  push:
-    branches: [ main ] # Must match your default branch name (main or master)
-
-jobs:
-  check_if_running:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Confirmation Step
-        run: echo "🎉 Workflow file is running successfully!"
+  issues:
+    types: [labeled]
+  # 💡 NEW LINE: Adds a manual trigger button
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to process'
+        required: true
+        default: '1'
