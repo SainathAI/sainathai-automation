@@ -1,0 +1,31 @@
+name: Sync to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-n8n-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push n8n directory to Hugging Face Space
+        run: |
+          git subtree push --prefix n8n https://SainathAI:${{ secrets.HF_ACCESS_TOKEN }}@huggingface.co/spaces/sainathai/sainathai-n8n main
+
+  sync-video-renderer-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push video_renderer directory to Hugging Face Space
+        run: |
+          git subtree push --prefix video_renderer https://SainathAI:${{ secrets.HF_ACCESS_TOKEN }}@huggingface.co/spaces/sainathai/sainathai-video-renderer main
