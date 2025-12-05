@@ -1,0 +1,41 @@
+name: Sync to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main # This workflow runs on pushes to the main branch
+
+jobs:
+  sync-n8n-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push n8n service to Hub
+        uses: huggingface/hub-action@v0.5
+        with:
+          repo_id: sainathai/sainathai-n8n
+          token: ${{ secrets.HF_ACCESS_TOKEN }}
+          repo_type: space
+          # Sync the contents of the local 'n8n' directory to the root of the Space repo
+          source: ./n8n/
+          target: .
+
+  sync-video-renderer-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push video_renderer service to Hub
+        uses: huggingface/hub-action@v0.5
+        with:
+          repo_id: sainathai/sainathai-video-renderer
+          token: ${{ secrets.HF_ACCESS_TOKEN }}
+          repo_type: space
+          # Sync the contents of the local 'video_renderer' directory to the root of the Space repo
+          source: ./video_renderer/
+          target: .
