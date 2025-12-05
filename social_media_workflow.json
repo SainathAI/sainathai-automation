@@ -726,30 +726,15 @@
         20
       ],
       "parameters": {
-        "options": {},
         "conditions": {
-          "options": {
-            "version": 2,
-            "leftValue": "",
-            "caseSensitive": true,
-            "typeValidation": "strict"
-          },
-          "combinator": "and",
-          "conditions": [
+          "boolean": [
             {
-              "id": "efe337a1-63e0-4513-873d-421bf41e4868",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              },
-              "leftValue": "={{ $json.data.approved }}",
-              "rightValue": ""
+              "value1": "={{ $json.data.approved }}"
             }
           ]
         }
       },
-      "typeVersion": 2.2
+      "typeVersion": 1
     },
     {
       "id": "e3193aef-d115-4c3b-87b2-b8ebd5bb0c05",
@@ -1016,49 +1001,6 @@
       "typeVersion": 1.7
     },
     {
-      "id": "b4a4838a-83b0-4f28-a9f3-dea915228325",
-      "name": "Image Choice",
-      "type": "n8n-nodes-base.form",
-      "disabled": true,
-      "position": [
-        -620,
-        -120
-      ],
-      "webhookId": "0dc811ef-b2e0-4213-a0c9-e9b5fb9fcbf1",
-      "parameters": {
-        "options": {
-          "formTitle": "Generate Post Image",
-          "buttonLabel": "Submit"
-        },
-        "formFields": {
-          "values": [
-            {
-              "fieldType": "file",
-              "fieldLabel": "Upload Image (optional)",
-              "multipleFiles": false,
-              "acceptFileTypes": ".jpg, .png, .jpeg"
-            },
-            {
-              "fieldType": "dropdown",
-              "fieldLabel": "Generate Custom Image using AI Image Generator",
-              "fieldOptions": {
-                "values": [
-                  {
-                    "option": "Yes"
-                  },
-                  {
-                    "option": "No"
-                  }
-                ]
-              },
-              "requiredField": true
-            }
-          ]
-        }
-      },
-      "typeVersion": 1
-    },
-    {
       "id": "1cf97c10-e60f-4584-b069-3d4506868d8e",
       "name": "Gmail Results",
       "type": "n8n-nodes-base.gmail",
@@ -1132,30 +1074,15 @@
         -20
       ],
       "parameters": {
-        "options": {},
         "conditions": {
-          "options": {
-            "version": 2,
-            "leftValue": "",
-            "caseSensitive": true,
-            "typeValidation": "strict"
-          },
-          "combinator": "and",
-          "conditions": [
+          "boolean": [
             {
-              "id": "e32d270f-f258-4522-94e1-2cb7ee4e8d2a",
-              "operator": {
-                "type": "boolean",
-                "operation": "true",
-                "singleValue": true
-              },
-              "leftValue": "={{ $json.data.approved }}",
-              "rightValue": ""
+              "value1": "={{ $json.data.approved }}"
             }
           ]
         }
       },
-      "typeVersion": 2.2
+      "typeVersion": 1
     },
     {
       "id": "fb7108e2-21cf-4df4-ab20-fe75b15b0a24",
@@ -1505,17 +1432,6 @@
           {
             "node": "Prepare Content Review Email",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Image Choice": {
-      "main": [
-        [
-          {
-            "node": "Rename Binary File",
-            "type": "main",
             "index": 0
           }
         ]
