@@ -21,6 +21,7 @@ jobs:
           hf_token: ${{ secrets.HF_ACCESS_TOKEN }}
           repo_type: space
           subdirectory: ./n8n/
+          private: false
 
   sync-video-renderer-to-hub:
     runs-on: ubuntu-latest
@@ -37,3 +38,4 @@ jobs:
           hf_token: ${{ secrets.HF_ACCESS_TOKEN }}
           repo_type: space
           subdirectory: ./video_renderer/
+          private: false
