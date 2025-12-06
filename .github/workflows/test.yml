@@ -1,0 +1,9 @@
+name: Final Simple Test
+on: [push] # Triggers on any push to any branch
+
+jobs:
+  check_if_running:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirmation Step
+        run: echo "SUCCESS: The workflow is now running!"
