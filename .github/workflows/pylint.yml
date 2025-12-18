@@ -20,5 +20,6 @@ jobs:
           pip install pylint
           pip install -r video_renderer/requirements.txt
       - name: Analysing the code with pylint
+        # Using a more robust command to analyze the directory
         run: |
-          pylint $(git ls-files 'video_renderer/**/*.py')
+          pylint video_renderer/
