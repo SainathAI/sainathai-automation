@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n:1.44.1
+    restart: always
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - NODE_FUNCTION_ALLOW_EXTERNAL=axios,qs
+    volumes:
+      - ./n8n_data:/root/.n8n
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
