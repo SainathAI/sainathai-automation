@@ -321,7 +321,6 @@
       "id": "6ee72138-a8ec-4fbd-8f14-fd6e881edfd1",
       "name": "Instragram Post",
       "type": "n8n-nodes-base.facebookGraphApi",
-      "onError": "continueRegularOutput",
       "position": [
         1700,
         160
@@ -353,13 +352,13 @@
         }
       },
       "typeVersion": 1,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "id": "9e168865-1eae-4e53-99c9-91b041426ecb",
       "name": "X Post",
       "type": "n8n-nodes-base.twitter",
-      "onError": "continueRegularOutput",
       "position": [
         1700,
         380
@@ -375,13 +374,13 @@
         }
       },
       "typeVersion": 2,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "id": "4ee55c94-7251-445e-8ce7-15eee7165010",
       "name": "Facebook Post",
       "type": "n8n-nodes-base.facebookGraphApi",
-      "onError": "continueRegularOutput",
       "position": [
         1700,
         600
@@ -415,13 +414,13 @@
         }
       },
       "typeVersion": 1,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "id": "3a015f3f-a162-411a-85e8-e1f042d9c653",
       "name": "LinkedIn Post",
       "type": "n8n-nodes-base.linkedIn",
-      "onError": "continueRegularOutput",
       "position": [
         1700,
         780
@@ -441,7 +440,8 @@
         }
       },
       "typeVersion": 1,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "id": "8ab03d75-b4c5-4271-8fa9-830f449a3a3c",
@@ -1301,7 +1301,8 @@
           "name": "Pinterest account"
         }
       },
-      "typeVersion": 1
+      "typeVersion": 1,
+      "onError": "continueRegularOutput"
     },
     {
       "id": "INIT-COUNTER-NODE",
