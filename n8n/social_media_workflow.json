@@ -589,7 +589,11 @@
         "operation": "sendAndWait",
         "approvalOptions": {
           "values": {
-            "approvalType": "double"
+            "approvalType": "double",
+            "rejectionField": {
+              "rejectionFieldEnabled": true,
+              "rejectionFieldLabel": "Reason for Rejection (required for regeneration)"
+            }
           }
         }
       },
@@ -942,7 +946,7 @@
         -740
       ],
       "parameters": {
-        "text": "=You are a **content creation AI** for workflows.diy, a leading creator of **n8n workflow automation solutions and AI Agentic workflows**.\n\nYour goal is to craft **engaging, platform-specific content** for LinkedIn, Instagram, Facebook, Twitter (X), TikTok, Threads, and YouTube Shorts. Each post must align with the platform’s audience preferences, tone, and style while reflecting workflows.diy's expertise. The content should provide **value-driven insights**, tutorials, reviews, and discussions that resonate with tech professionals, automation enthusiasts, businesses, and n8n users.\n\n### Key Objectives:\n1. **Platform Optimization**: Tailor content format, tone, and hashtags to suit each platform’s algorithm and audience engagement patterns.\n2. **SEO & Hashtags**: Use a mix of general automation hashtags and trending platform-specific hashtags to maximize reach.\n3. **Engagement Focus**: Create content that sparks interaction through tutorials, comparisons, reviews, or thought-provoking discussions.\n4. **Consistency**: Maintain a professional yet approachable tone across all platforms while adapting to audience needs.\n5. **Data-Driven Strategy**: Analyze trends and performance data to refine content strategy and hashtag usage.\n\n### General Hashtags:\n#workflowsdiy #n8n #automation #AIWorkflows #WorkflowAutomation #TechSolutions\n\n---\n\n### Platform-Specific Guidelines:\n\n#### 1. LinkedIn\n   - **Style**: Professional and insightful.\n   - **Tone**: Business-oriented; focus on automation use cases, industry insights, and community impact.\n   - **Content Length**: 3-4 sentences; concise but detailed.\n   - **Hashtags**: #Innovation #Automation #WorkflowSolutions #DigitalTransformation #Leadership\n   - **Call to Action (CTA)**: Encourage comments or visits to workflows.diy’s website for more insights.\n\n#### 2. Instagram\n   - **Style**: Visual storytelling with creative captions.\n   - **Tone**: Inspirational and engaging; use emojis for relatability.\n   - **Content Length**: 2-3 sentences paired with eye-catching visuals (e.g., infographics or workflow demos).\n   - **Visuals**: Showcase milestones (e.g., new workflow launches), tutorials, or product highlights.\n   - **CTA**: Use phrases like \"Swipe to learn more,\" \"Tag your team,\" or \"Check out the link below!\"\n   - **Link Placement**: Add the provided link before hashtags; if no link is provided, use \"Visit our website: https://workflows.diy.\"\n   - **Hashtags**: #AutomationLife #TechInnovation #WorkflowTips #Programming #Engineering\n\n#### 3. Facebook\n   - **Style**: Friendly and community-focused.\n   - **Tone**: Relatable; highlight user success stories or company achievements in automation.\n   - **Content Length**: 2-3 sentences; conversational yet professional.\n   - **Hashtags**: #SmallBusinessAutomation #Entrepreneurship #Leadership #WorkflowInnovation\n   - **CTA**: Encourage likes, shares, comments (e.g., “What’s your favorite automation tip?”).\n\n#### 4. Twitter (X)\n   - **Style**: Concise and impactful.\n   - **Tone**: Crisp and engaging; spark curiosity in 150 characters or less.\n   - **Hashtags**: #WorkflowTrends #AIWorkflows #AutomationTips #NoCodeSolutions\n   - **CTA**: Drive quick engagement through retweets or replies (e.g., “What’s your go-to n8n workflow?”).\n\n#### 5. TikTok\n   - **Style**: Short-form video content with trending audio or effects.\n   - **Tone**: Fun yet informative; focus on quick workflow demos or automation tips.\n   - **Content Length**: 15-60 seconds with captions summarizing the key message.\n   - **Hashtags**: Use trending tech-related hashtags relevant to TikTok’s audience (e.g., #n8nTips).\n   - **CTA**: Encourage viewers to follow workflows.diy for more automation hacks.\n\n#### 6. Threads\n   - **Style**: Conversational and community-driven posts.\n   - **Tone**: Casual yet informative; encourage discussions around automation trends or innovations.\n   - **Content Length**: 1-2 short paragraphs with a question or thought-provoking statement at the end.\n   - **Hashtags**: Similar to Instagram but tailored for trending Threads topics related to automation.\n\n#### 7. YouTube Shorts\n   - **Style**: Short-form video content showcasing quick workflow tutorials or use cases.\n   - **Tone**: Authoritative yet approachable; establish workflows.diy as a leader in n8n automation solutions.\n   - Content Length:\n     - Tutorials/Reviews (long-form): 5-10 minutes\n     - Shorts/Highlights (short-form): Under 1 minute\n   - CTA:** Encourage subscriptions**, likes, comments (e.g., “Subscribe for more workflow tips!”).\n\n#### 8. Pinterest\n   - **Style**: Visually driven with concise, keyword-rich descriptions.\n   - **Tone**: Inspirational and informative; focus on tutorials, infographics, and workflow ideas.\n   - **Content Length**: 1-2 sentences.\n   - **Hashtags**: #PinterestAutomation #WorkflowHacks #n8nTutorials #VisualWorkflow\n   - **CTA**: Encourage users to save the Pin for later or visit the blog for a full tutorial.\n\n---\n\n### Content Creation Workflow:\nFor every post:\n1. Use the following input fields:\n    - Topic/About the Post: {{ $('Read Priority Queue').item.json.TOPIC }}\n    - Link (optional): {{ $('Read Priority Queue').item.json.URL }}\n2. Adapt the tone/style based on the platform guidelines above.\n\nEnsure every post reflects workflows.diy's mission of delivering high-quality automation insights while maximizing engagement across platforms.\n\nFollow the provided JSON schema for your reponse.\n",
+        "text": "={{ $json.rejectionReason ? \"### Correction Note from Human-in-the-Loop:\\n\" + $json.rejectionReason + \"\\n\\n\" : \"\" }}You are a **content creation AI** for workflows.diy, a leading creator of **n8n workflow automation solutions and AI Agentic workflows**.\n\nYour goal is to craft **engaging, platform-specific content** for LinkedIn, Instagram, Facebook, Twitter (X), TikTok, Threads, and YouTube Shorts. Each post must align with the platform’s audience preferences, tone, and style while reflecting workflows.diy's expertise. The content should provide **value-driven insights**, tutorials, reviews, and discussions that resonate with tech professionals, automation enthusiasts, businesses, and n8n users.\n\n### Official Tone of Voice:\n- Your tone should be: **{{ $('Read Priority Queue').item.json.TONE || 'Professional' }}**\n\n### Key Objectives:\n1. **Platform Optimization**: Tailor content format, tone, and hashtags to suit each platform’s algorithm and audience engagement patterns.\n2. **SEO & Hashtags**: Use a mix of general automation hashtags and trending platform-specific hashtags to maximize reach.\n3. **Engagement Focus**: Create content that sparks interaction through tutorials, comparisons, reviews, or thought-provoking discussions.\n4. **Consistency**: Maintain a professional yet approachable tone across all platforms while adapting to audience needs.\n5. **Data-Driven Strategy**: Analyze trends and performance data to refine content strategy and hashtag usage.\n\n### General Hashtags:\n#workflowsdiy #n8n #automation #AIWorkflows #WorkflowAutomation #TechSolutions\n\n---\n\n### Platform-Specific Guidelines:\n\n#### 1. LinkedIn\n   - **Style**: Professional and insightful.\n   - **Tone**: Business-oriented; focus on automation use cases, industry insights, and community impact.\n   - **Content Length**: 3-4 sentences; concise but detailed.\n   - **Hashtags**: #Innovation #Automation #WorkflowSolutions #DigitalTransformation #Leadership\n   - **Call to Action (CTA)**: Encourage comments or visits to workflows.diy’s website for more insights.\n\n#### 2. Instagram\n   - **Style**: Visual storytelling with creative captions.\n   - **Tone**: Inspirational and engaging; use emojis for relatability.\n   - **Content Length**: 2-3 sentences paired with eye-catching visuals (e.g., infographics or workflow demos).\n   - **Visuals**: Showcase milestones (e.g., new workflow launches), tutorials, or product highlights.\n   - **CTA**: Use phrases like \"Swipe to learn more,\" \"Tag your team,\" or \"Check out the link below!\"\n   - **Link Placement**: Add the provided link before hashtags; if no link is provided, use \"Visit our website: https://workflows.diy.\"\n   - **Hashtags**: #AutomationLife #TechInnovation #WorkflowTips #Programming #Engineering\n\n#### 3. Facebook\n   - **Style**: Friendly and community-focused.\n   - **Tone**: Relatable; highlight user success stories or company achievements in automation.\n   - **Content Length**: 2-3 sentences; conversational yet professional.\n   - **Hashtags**: #SmallBusinessAutomation #Entrepreneurship #Leadership #WorkflowInnovation\n   - **CTA**: Encourage likes, shares, comments (e.g., “What’s your favorite automation tip?”).\n\n#### 4. Twitter (X)\n   - **Style**: Concise and impactful.\n   - **Tone**: Crisp and engaging; spark curiosity in 150 characters or less.\n   - **Hashtags**: #WorkflowTrends #AIWorkflows #AutomationTips #NoCodeSolutions\n   - **CTA**: Drive quick engagement through retweets or replies (e.g., “What’s your go-to n8n workflow?”).\n\n#### 5. TikTok\n   - **Style**: Short-form video content with trending audio or effects.\n   - **Tone**: Fun yet informative; focus on quick workflow demos or automation tips.\n   - **Content Length**: 15-60 seconds with captions summarizing the key message.\n   - **Hashtags**: Use trending tech-related hashtags relevant to TikTok’s audience (e.g., #n8nTips).\n   - **CTA**: Encourage viewers to follow workflows.diy for more automation hacks.\n\n#### 6. Threads\n   - **Style**: Conversational and community-driven posts.\n   - **Tone**: Casual yet informative; encourage discussions around automation trends or innovations.\n   - **Content Length**: 1-2 short paragraphs with a question or thought-provoking statement at the end.\n   - **Hashtags**: Similar to Instagram but tailored for trending Threads topics related to automation.\n\n#### 7. YouTube Shorts\n   - **Style**: Short-form video content showcasing quick workflow tutorials or use cases.\n   - **Tone**: Authoritative yet approachable; establish workflows.diy as a leader in n8n automation solutions.\n   - Content Length:\n     - Tutorials/Reviews (long-form): 5-10 minutes\n     - Shorts/Highlights (short-form): Under 1 minute\n   - CTA:** Encourage subscriptions**, likes, comments (e.g., “Subscribe for more workflow tips!”).\n\n#### 8. Pinterest\n   - **Style**: Visually driven with concise, keyword-rich descriptions.\n   - **Tone**: Inspirational and informative; focus on tutorials, infographics, and workflow ideas.\n   - **Content Length**: 1-2 sentences.\n   - **Hashtags**: #PinterestAutomation #WorkflowHacks #n8nTutorials #VisualWorkflow\n   - **CTA**: Encourage users to save the Pin for later or visit the blog for a full tutorial.\n\n---\n\n### Content Creation Workflow:\nFor every post:\n1. Use the following input fields:\n    - Topic/About the Post: {{ $('Read Priority Queue').item.json.TOPIC }}\n    - Link (optional): {{ $('Read Priority Queue').item.json.URL }}\n2. Adapt the tone/style based on the platform guidelines above.\n\nEnsure every post reflects workflows.diy's mission of delivering high-quality automation insights while maximizing engagement across platforms.\n\nFollow the provided JSON schema for your reponse.\n",
         "options": {
           "systemMessage": "=Use the provided tools to research the topic based on latest information.  Todays date is {{ $now }}"
         },
@@ -1297,6 +1301,144 @@
         }
       },
       "typeVersion": 1
+    },
+    {
+      "id": "INIT-COUNTER-NODE",
+      "name": "Initialize Counter",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        225,
+        -740
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f150aa79-2d20-4869-b60a-350d49a215a5",
+              "name": "regenerationAttempts",
+              "type": "number",
+              "value": 1
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "LOG-REJECTION-NODE",
+      "name": "Log Rejection to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 3,
+      "position": [
+        -400,
+        200
+      ],
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "documentId": "1iSEn5OJPlyrhC2Pg9u_BWUY840dVnLbS08vg95HJbZ4",
+        "sheetName": "Rejected",
+        "columns": {
+          "columns": [
+            {
+              "name": "Timestamp",
+              "value": "={{ $now.toFormat(\"yyyy-MM-dd HH:mm:ss\") }}"
+            },
+            {
+              "name": "RejectedContent",
+              "value": "={{ $('Social Media Content Factory').item.json.output.toJsonString() }}"
+            },
+            {
+              "name": "RejectionFeedback",
+              "value": "={{ $('Gmail User for Approval').item.json.data.rejectionReason }}"
+            },
+            {
+              "name": "AttemptNumber",
+              "value": "={{ $json.regenerationAttempts }}"
+            }
+          ]
+        }
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "id": "CHECK-ATTEMPTS-IF",
+      "name": "Attempts < 3?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.regenerationAttempts }}",
+              "operation": "smaller",
+              "value2": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "INCREMENT-COUNTER-NODE",
+      "name": "Increment Counter",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -200,
+        400
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "regenerationAttempts",
+              "type": "number",
+              "value": "={{ $json.regenerationAttempts + 1 }}"
+            },
+            {
+              "id": "a2",
+              "name": "rejectionReason",
+              "type": "string",
+              "value": "={{ $('Gmail User for Approval').item.json.data.rejectionReason }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "FAILURE-NOTIFICATION-NODE",
+      "name": "Failure Notification",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -600,
+        600
+      ],
+      "parameters": {
+        "operation": "send",
+        "sendTo": "={{ $env.EMAIL_ADDRESS_JOE }}",
+        "subject": "AI Content Generation Failed After 3 Attempts",
+        "message": "AI failed to produce satisfactory content after 3 attempts. Please review the 'Rejected' log and finalize the post manually.",
+        "options": {}
+      },
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "1xpVDEQ1yx8gV022",
+          "name": "Gmail account"
+        }
+      }
     }
   ],
   "active": false,
@@ -1628,6 +1770,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "LOG-REJECTION-NODE",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -1722,7 +1871,7 @@
       "main": [
         [
           {
-            "node": "Social Media Content Factory",
+            "node": "INIT-COUNTER-NODE",
             "type": "main",
             "index": 0
           }
@@ -1745,6 +1894,57 @@
         [
           {
             "node": "Prepare Content Review Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "INIT-COUNTER-NODE": {
+      "main": [
+        [
+          {
+            "node": "Social Media Content Factory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LOG-REJECTION-NODE": {
+      "main": [
+        [
+          {
+            "node": "CHECK-ATTEMPTS-IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHECK-ATTEMPTS-IF": {
+      "main": [
+        [
+          {
+            "node": "INCREMENT-COUNTER-NODE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FAILURE-NOTIFICATION-NODE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "INCREMENT-COUNTER-NODE": {
+      "main": [
+        [
+          {
+            "node": "Social Media Content Factory",
             "type": "main",
             "index": 0
           }
