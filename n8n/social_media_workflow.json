@@ -463,7 +463,8 @@
         }
       },
       "typeVersion": 1.8,
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
     },
     {
       "id": "d1ac29b1-128d-4615-b828-89f1f64d1b15",
@@ -598,7 +599,7 @@
         }
       },
       "credentials": {
-        "gmailOAuth2": {
+        "gmailOAuth2Api": {
           "id": "1xpVDEQ1yx8gV022",
           "name": "Gmail account"
         }
@@ -699,7 +700,7 @@
         }
       },
       "credentials": {
-        "gmailOAuth2": {
+        "gmailOAuth2Api": {
           "id": "1xpVDEQ1yx8gV022",
           "name": "Gmail account"
         }
@@ -965,7 +966,7 @@
         -740
       ],
       "parameters": {
-        "text": "=Generate clean, modern HTML email content from the provided JSON data with these requirements:\n- Use table-based layout with inline CSS for email compatibility\n- Create card sections for each platform containing:\n  • Title header (20px) \n  • Post content (16px) \n  • Video/image suggestions (italic 14px)\n  • Hashtag list (inline-block with # prefix)\n  • Emoji preservation where present\n  • Call-to-action (bold 14px)\n- Structure using:\n  • 600px max-width container\n  • 20px padding between cards\n  • Left-aligned text hierarchy\n  • Arial/sans-serif font stack\n  • Email-safe colors (#333 text, #555 secondary)\n- Include all platform-specific elements:\n  ▶ Video/image suggestions in italic\n  ▶ Hashtags as linked search terms\n  ▶ Emojis in original positions\n  ▶ Character limits for Twitter\n  ▶ Platform-specific CTAs\n  ▶ Visual quality reminders\n- Format hashtags as:\n  <span style=\"display: inline-block; background: #f0f0f0; padding: 2px 6px; margin: 2px; border-radius: 4px;\">#tag</span>\n\nInput data: {{ $json.output.toJsonString() }}\n\nRemove ALL code blocks and comments. Output ONLY the raw HTML with:\n- Platform cards in JSON order\n- All data elements represented\n- Mobile-responsive tables\n- W3C-valid markup\n\n## Example HTML:\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#fbfcfe;border:1px solid #dbdfe7;border-radius:8px\">\n\t\t<tbody><tr>\n\t\t\t<td align=\"center\" style=\"padding:24px 0\">\n\t\t\t\t<table width=\"448\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:448px;background-color:#ffffff;border:1px solid #dbdfe7;border-radius:8px;padding:24px\">\n\t\t\t\t\t<tbody><tr>\n\t\t\t\t\t\t<td style=\"text-align:center;padding-top:8px;font-family:Arial,sans-serif;font-size:14px;color:#7e8186\">\n\t\t\t\t\t\t\t<p style=\"white-space:pre-line\"></p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:600px;font-family:Arial,sans-serif;color:#333\"><tbody><tr><td style=\"padding:20px\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">LinkedIn</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">Discover why n8n stands out as the premier workflow automation tool. Its flexibility and open-source nature empower businesses to create custom solutions that drive efficiency and innovation.</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Video/Image suggestion pending</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Innovation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Automation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowSolutions</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>DigitalTransformation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>Leadership</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Visit workflows.diy to explore how n8n can transform your business processes!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Instagram</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Eye-catching infographic comparing n8n to other automation tools, highlighting its unique features.</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n: The ultimate workflow automation tool! <img data-emoji=\"💡\" class=\"an1\" alt=\"💡\" aria-label=\"💡\" draggable=\"false\" src=\"https://fonts.gstatic.com/s/e/notoemoji/16.0/1f4a1/32.png\" loading=\"lazy\"> Unlock limitless possibilities with its open-source platform. Boost your productivity and streamline your processes. <img data-emoji=\"💤\" class=\"an1\" alt=\"💤\" aria-label=\"💤\" draggable=\"false\" src=\"https://fonts.gstatic.com/s/e/notoemoji/16.0/1f4a4/32.png\" loading=\"lazy\"></td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AutomationLife</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#TechInnovation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#WorkflowTips</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Programming</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>Engineering</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Visit our website: <a href=\"https://n8n.io/\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://n8n.io/&amp;source=gmail&amp;ust=1741030878129000&amp;usg=AOvVaw1Nr6ek3eGwe94zlbPaJrzT\">https://n8n.io/</a> #AutomationLife #TechInnovation #WorkflowTips #Programming #Engineering</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Facebook</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">See why businesses are choosing n8n for their workflow automation needs. From its user-friendly interface to its powerful customization options, n8n is revolutionizing how companies approach automation.</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">A visually appealing graphic showcasing n8n's key features and benefits.</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#SmallBusinessAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>Entrepreneurship</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Leadership</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowInnovation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">What's your favorite automation tip? Share in the comments!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Twitter</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n: The best #WorkflowAutomation tool! Open-source, customizable, and powerful. Transform your business processes today!</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowTrends</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AutomationTips</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#NoCodeSolutions</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">TikTok</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Quick demo showcasing how n8n simplifies complex workflows with its intuitive interface.</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n: Your go-to for effortless workflow automation! <img data-emoji=\"✨\" class=\"an1\" alt=\"✨\" aria-label=\"✨\" draggable=\"false\" src=\"https://fonts.gstatic.com/s/e/notoemoji/16.0/2728/32.png\" loading=\"lazy\"></td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8nTips</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Follow workflows.diy for more automation hacks!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Threads</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n is transforming the automation landscape. Its open-source nature and extensive integrations make it a top choice for businesses of all sizes. What are your thoughts on the future of workflow automation?</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Share your insights below!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">YouTube Shorts</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Short tutorial demonstrating how to build a simple automation workflow in n8n.</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">Learn why n8n is the top choice for workflow automation. Its open-source platform and powerful features make it a game-changer for businesses.</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#automation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>workflowautomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#nocode</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Subscribe for more workflow tips!</td></tr></tbody></table></td></tr></tbody></table><p></p>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</tbody>\n\t\t\t</table>\n",
+        "text": "=Generate clean, modern HTML email content from the provided JSON data with these requirements:\n- Use table-based layout with inline CSS for email compatibility\n- Create card sections for each platform containing:\n  • Title header (20px) \n  • Post content (16px) \n  • Video/image suggestions (italic 14px)\n  • Hashtag list (inline-block with # prefix)\n  • Emoji preservation where present\n  • Call-to-action (bold 14px)\n- Add a \"Tone\" section at the top of the email, displaying the selected tone for the content.\n- Structure using:\n  • 600px max-width container\n  • 20px padding between cards\n  • Left-aligned text hierarchy\n  • Arial/sans-serif font stack\n  • Email-safe colors (#333 text, #555 secondary)\n- Include all platform-specific elements:\n  ▶ Video/image suggestions in italic\n  ▶ Hashtags as linked search terms\n  ▶ Emojis in original positions\n  ▶ Character limits for Twitter\n  ▶ Platform-specific CTAs\n  ▶ Visual quality reminders\n- Format hashtags as:\n  <span style=\"display: inline-block; background: #f0f0f0; padding: 2px 6px; margin: 2px; border-radius: 4px;\">#tag</span>\n\nInput data: {{ $json.output.toJsonString() }}\nTone: {{ $('Read Priority Queue').item.json.TONE || 'Professional' }}\n\nRemove ALL code blocks and comments. Output ONLY the raw HTML with:\n- Platform cards in JSON order\n- All data elements represented\n- Mobile-responsive tables\n- W3C-valid markup\n\n## Example HTML:\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#fbfcfe;border:1px solid #dbdfe7;border-radius:8px\">\n\t\t<tbody><tr>\n\t\t\t<td align=\"center\" style=\"padding:24px 0\">\n\t\t\t\t<table width=\"448\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;max-width:448px;background-color:#ffffff;border:1px solid #dbdfe7;border-radius:8px;padding:24px\">\n\t\t\t\t\t<tbody><tr>\n\t\t\t\t\t\t<td style=\"text-align:center;padding-top:8px;font-family:Arial,sans-serif;font-size:14px;color:#7e8186\">\n\t\t\t\t\t\t\t<p style=\"white-space:pre-line\"></p><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:600px;font-family:Arial,sans-serif;color:#333\"><tbody><tr><td style=\"padding:20px\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Tone</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">Professional</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">LinkedIn</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">Discover why n8n stands out as the premier workflow automation tool. Its flexibility and open-source nature empower businesses to create custom solutions that drive efficiency and innovation.</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Video/Image suggestion pending</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Innovation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Automation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowSolutions</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>DigitalTransformation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>Leadership</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Visit workflows.diy to explore how n8n can transform your business processes!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Instagram</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Eye-catching infographic comparing n8n to other automation tools, highlighting its unique features.</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n: The ultimate workflow automation tool! <img data-emoji=\"💡\" class=\"an1\" alt=\"💡\" aria-label=\"💡\" draggable=\"false\" src=\"https://fonts.gstatic.com/s/e/notoemoji/16.0/1f4a1/32.png\" loading=\"lazy\"> Unlock limitless possibilities with its open-source platform. Boost your productivity and streamline your processes. <img data-emoji=\"💤\" class=\"an1\" alt=\"💤\" aria-label=\"💤\" draggable=\"false\" src=\"https://fonts.gstatic.com/s/e/notoemoji/16.0/1f4a4/32.png\" loading=\"lazy\"></td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AutomationLife</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#TechInnovation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#WorkflowTips</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Programming</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>Engineering</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Visit our website: <a href=\"https://n8n.io/\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://n8n.io/&amp;source=gmail&amp;ust=1741030878129000&amp;usg=AOvVaw1Nr6ek3eGwe94zlbPaJrzT\">https://n8n.io/</a> #AutomationLife #TechInnovation #WorkflowTips #Programming #Engineering</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Facebook</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">See why businesses are choosing n8n for their workflow automation needs. From its user-friendly interface to its powerful customization options, n8n is revolutionizing how companies approach automation.</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">A visually appealing graphic showcasing n8n's key features and benefits.</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#SmallBusinessAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>Entrepreneurship</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#Leadership</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowInnovation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">What's your favorite automation tip? Share in the comments!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Twitter</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n: The best #WorkflowAutomation tool! Open-source, customizable, and powerful. Transform your business processes today!</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowTrends</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AutomationTips</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#NoCodeSolutions</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">TikTok</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Quick demo showcasing how n8n simplifies complex workflows with its intuitive interface.</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n: Your go-to for effortless workflow automation! <img data-emoji=\"✨\" class=\"an1\" alt=\"✨\" aria-label=\"✨\" draggable=\"false\" src=\"https://fonts.gstatic.com/s/e/notoemoji/16.0/2728/32.png\" loading=\"lazy\"></td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8nTips</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\"><wbr>#TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Follow workflows.diy for more automation hacks!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">Threads</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">n8n is transforming the automation landscape. Its open-source nature and extensive integrations make it a top choice for businesses of all sizes. What are your thoughts on the future of workflow automation?</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>WorkflowAutomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Share your insights below!</td></tr></tbody></table><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background-color:#f9f9f9;margin-bottom:20px;padding:20px;border-radius:8px\"><tbody><tr><td style=\"font-size:20px;font-weight:bold;padding-bottom:10px\">YouTube Shorts</td></tr><tr><td style=\"font-size:14px;font-style:italic;padding-bottom:10px\">Short tutorial demonstrating how to build a simple automation workflow in n8n.</td></tr><tr><td style=\"font-size:16px;padding-bottom:10px\">Learn why n8n is the top choice for workflow automation. Its open-source platform and powerful features make it a game-changer for businesses.</td></tr><tr><td style=\"padding-bottom:10px\"><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#n8n</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#automation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>workflowautomation</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#nocode</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>workflowsdiy</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#AIWorkflows</span><span style=\"display:inline-block;background:#f0f0f0;padding:2px 6px;margin:2px;border-radius:4px\">#<wbr>TechSolutions</span></td></tr><tr><td style=\"font-size:14px;font-weight:bold\">Subscribe for more workflow tips!</td></tr></tbody></table></td></tr></tbody></table><p></p>\n\t\t\t\t\t\t</td>\n\t\t\t\t\t</tr>\n\t\t\t\t</tbody>\n\t\t\t</table>\n",
         "agent": "conversationalAgent",
         "options": {},
         "promptType": "define"
@@ -1022,7 +1023,7 @@
         "subject": "🔥RESULTS🔥 Social Media Factory"
       },
       "credentials": {
-        "gmailOAuth2": {
+        "gmailOAuth2Api": {
           "id": "1xpVDEQ1yx8gV022",
           "name": "Gmail account"
         }
@@ -1362,7 +1363,7 @@
       },
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "REPLACE-WITH-YOUR-GOOGLE-SHEETS-CREDENTIAL-ID",
+          "id": "1",
           "name": "Google Sheets account"
         }
       }
@@ -1434,10 +1435,65 @@
         "options": {}
       },
       "credentials": {
-        "gmailOAuth2": {
+        "gmailOAuth2Api": {
           "id": "1xpVDEQ1yx8gV022",
           "name": "Gmail account"
         }
+      }
+    },
+    {
+      "id": "IMAGE-FAILED-IF",
+      "name": "Image Failed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        200,
+        -20
+      ],
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $('OpenAI').item.error !== undefined || $('OpenAI').item.json.data[0].url === '' }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "FETCH-DEFAULT-IMAGE-NODE",
+      "name": "Fetch Default Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        180
+      ],
+      "parameters": {
+        "url": "https://workflowsdiy.com/default-post-image.png",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": false,
+              "format": "file"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "MERGE-IMAGE-FALLBACK-NODE",
+      "name": "Merge Fallback",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        360,
+        -20
+      ],
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
       }
     }
   ],
@@ -1490,19 +1546,9 @@
       "main": [
         [
           {
-            "node": "Save Image to imgbb.com3",
+            "node": "IMAGE-FAILED-IF",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          },
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -1945,6 +1991,46 @@
         [
           {
             "node": "Social Media Content Factory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IMAGE-FAILED-IF": {
+      "main": [
+        [
+          {
+            "node": "FETCH-DEFAULT-IMAGE-NODE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "MERGE-IMAGE-FALLBACK-NODE",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "FETCH-DEFAULT-IMAGE-NODE": {
+      "main": [
+        [
+          {
+            "node": "MERGE-IMAGE-FALLBACK-NODE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MERGE-IMAGE-FALLBACK-NODE": {
+      "main": [
+        [
+          {
+            "node": "Save Image to imgbb.com3",
             "type": "main",
             "index": 0
           }
