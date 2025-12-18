@@ -1,0 +1,25 @@
+name: Deploy n8n to Hugging Face Hub
+
+on:
+  push:
+    branches:
+      - dev  # This workflow runs on pushes to the dev branch
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push to Hub
+        uses: huggingface-hub/actions/push-to-hub@v0
+        with:
+          repo_id: sainathai/sainathai-n8n
+          source_dir: n8n/
+          target_dir: .
+          commit_message: "feat: Sync n8n workflow and configuration from GitHub"
+          hf_token: ${{ secrets.HF_TOKEN_N8N }}
+          force: true
