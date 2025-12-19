@@ -1,5 +1,9 @@
 services:
   n8n:
+  deploy:
+  resources:
+    limits:
+      memory: 1GB
     image: n8nio/n8n:1.70.0
     restart: always
     ports:
