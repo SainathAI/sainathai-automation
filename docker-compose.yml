@@ -1,0 +1,19 @@
+services:
+  n8n:
+    image: n8nio/n8n:1.70.0
+    restart: always
+    ports:
+      - "127.0.0.1:5678:5678"
+    environment:
+      - DB_TYPE=sqlite
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      # Forces n8n to use very little memory
+      - NODE_OPTIONS=--max-old-space-size=512
+      # Don't save successful execution data in the database
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
+      # Delete old data every hour
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=1
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    mem_limit: 1g
